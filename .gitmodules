@@ -1,0 +1,3 @@
+[submodule "bledevices"]
+	path = bledevices
+	url = git@github.com:littlepinkyl/bledevices.git

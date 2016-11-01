@@ -65,6 +65,9 @@ def dlnglat_drssi(drssi):
 
 def solve_lnglat():
     #solve a equation which has defined three radius and centered, return a lnglat;
+    # build equation set with two strong rssi records;
+    # find which point by the third weakest rssi records;
+
 
     return
 
@@ -75,7 +78,7 @@ def auto_generate():
         time.sleep(3)
         for ap in APs:
             drssi = drssi_dlnglat(i, ap.get('lnglat'))
-            send('{0} {1} {2}'.format(ap.get('id'), '131', drssi))
+            send('{0} {1} {2}'.format(ap.get('id'), '131', drssi+35+random.randint(1,10)))# add a base rssi to delta rssi
 
         #we have 3 AP; lnglat = [113.943814,22.529188], [113.94361,22.529163], [113.943637,22.529069]
         #we have 1 bracelet: ID = 131, rssi strength f(0) = 35, f(10) = 99
