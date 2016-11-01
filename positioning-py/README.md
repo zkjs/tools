@@ -10,4 +10,4 @@
 
 - python 2.7.11
 - pip install -U socketIO-client
-
+- pip install sympy

@@ -4,6 +4,11 @@
 from socketIO_client import SocketIO
 import logging
 import math, random, time
+from sympy.solvers import solve
+from sympy import Symbol
+
+
+
 logging.basicConfig(level=logging.INFO)
 
 logger = logging.getLogger('__main__')
@@ -63,13 +68,34 @@ def dlnglat_drssi(drssi):
     logger.info('dm={0}, dlnglat={1}'.format(dm, dlnglat))
     return dlnglat
 
-def solve_lnglat():
+def solve_lnglat(args):
     #solve a equation which has defined three radius and centered, return a lnglat;
     # build equation set with two strong rssi records;
     # find which point by the third weakest rssi records;
+    # first attempt to solve the three function to get a solution;
+    x = Symbol('x')
+    y = Symbol('y')
+    #define variant
+    [x1, y1] = args[0].lnglat
+    [x2, y2] = args[1].lnglat
+    [x3, y3] = args[2].lnglat
+    s1 = args[0].rssi - 35
+    s2 = args[1].rssi - 35
+    s3 = args[2].rssi - 35
 
-
-    return
+    #x1 ap1's lng, y1 ap1's lat, s1 ap1's rssi - standard, k ration from rssi
+    #to dlnglat; solution is a new lnglat;
+    #(x - x1)**2 + (y - y1)**2 = (s1*k)**2 # for one signal;
+    k = float(1800/(65 *math.pi * 6378000))
+    eq = [
+            (x-x1)**2 + (x-x2)**2 = (k*s1)**2,
+            (x-x2)**2 + (x-x2)**2 = (k*s2)**2,
+            (x-x3)**2 + (x-x3)**2 = (k*s3)**2
+            ]
+    
+    ans = solve(eq)
+    logger.info('solver ans = {0}'.format(str(ans)))
+    return ans
 
 def auto_generate():
     #
