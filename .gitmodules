@@ -1,3 +1,6 @@
 [submodule "bledevices"]
 	path = bledevices
 	url = git@github.com:littlepinkyl/bledevices.git
+[submodule "blep"]
+	path = blep
+	url = git@github.com:littlepinkyl/blep.git
