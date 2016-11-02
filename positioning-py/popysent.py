@@ -128,7 +128,8 @@ def send(args):
 
 def on_socket_connect_ack(args):
     print 'on_socket_connect_ack', args
-    socketIO.emit('connect_v2', {'appkey': '58117375374bd76b1b5b690a', 'customid': 'python_demo'})
+    socketIO.emit('connect_v2', {'appkey': '58117375374bd76b1b5b690a',
+        'customid': 'data_sender'})
 
 def on_connack(args):
     print 'on_connack', args
@@ -152,13 +153,13 @@ def on_suback(args):
         'qos': 1
         })
 
-    socketIO.emit('set_alias', {'alias': 'mytestalias1'})
-#    auto_generate()
+    socketIO.emit('set_alias', {'alias': 'data_sender'})
+    auto_generate()
 
 
 
 def on_message(args):
-    print 'on_message', args
+#    print 'on_message', args
     #TODO: from msg to cached data and do positioning
     #data = json.loads(args)
     #str1 = data.get('msg')
@@ -168,7 +169,7 @@ def on_message(args):
     if m:
         match = m.start()
         end = m.end()
-        logger.info('what the fuck args str?---------{0}'.format(bs[match:end]))
+#        logger.info('what the fuck args str?---------{0}'.format(bs[match:end]))
 #        try:
 #            data = json.loads(str(args[match-23:len(args)-1]))
 #        except:
@@ -183,31 +184,31 @@ def on_message(args):
     #parse the data and arrange it; key = braceletid, value=[{lnglat, rssi}]
     #if get('key') len >=3 ,then solve the equation
     
-    if len(sdata) == 3:
-        key = str(sdata[1])
-        logger.info('luck we are here <<<<<<<<<<<<<<<<<<<<<<-----------------{0}'.format(key))
-        if traces.get(key) == None:
+#    if len(sdata) == 3:
+#        key = str(sdata[1])
+#        logger.info('luck we are here <<<<<<<<<<<<<<<<<<<<<<-----------------{0}'.format(key))
+#        if traces.get(key) == None:
         
-            value = []
-            value.append([APs[int(sdata[0])-1].get('lnglat'), sdata[2]])
-            traces[key] = value
+#            value = []
+#            value.append([APs[int(sdata[0])-1].get('lnglat'), sdata[2]])
+#            traces[key] = value
 
-        elif len(traces.get(key)) >= 3:
-            ans = solve_lnglat(traces.get(key))
-            logger.info('args = {0}'.format(str(traces.get(key))))
-            value = []
-            value.append([APs[int(sdata[0])-1].get('lnglat'), sdata[2]])
-            traces[key]= value
-            print ans
-            results.append(ans)
+#        elif len(traces.get(key)) >= 3:
+#            ans = solve_lnglat(traces.get(key))
+#            logger.info('args = {0}'.format(str(traces.get(key))))
+#            value = []
+#            value.append([APs[int(sdata[0])-1].get('lnglat'), sdata[2]])
+#            traces[key]= value
+#            print ans
+#            results.append(ans)
 
-        else:
-            value = traces.get(key)
-            value.append([APs[int(sdata[0])-1].get('lnglat'), sdata[2]])
-            traces[key]=value
-        logger.info('state of dic traces = {0}'.format(str(traces.values())))
-    else:
-        logger.info('unknow msg type')
+#        else:
+#            value = traces.get(key)
+#            value.append([APs[int(sdata[0])-1].get('lnglat'), sdata[2]])
+#            traces[key]=value
+#        logger.info('state of dic traces = {0}'.format(str(traces.values())))
+#    else:
+#        logger.info('unknow msg type')
 
 def result():
     print str(results)
