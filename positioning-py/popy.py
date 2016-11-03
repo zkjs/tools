@@ -90,9 +90,9 @@ def solve_lnglat(args):
     #(x - x1)**2 + (y - y1)**2 = (s1*k)**2 # for one signal;
     k = float(1800/(65 *math.pi * 6378000))
     eq = [
-            (x-x1)**2 + (x-x2)**2 - (k*s1)**2,
-            (x-x2)**2 + (x-x2)**2 - (k*s2)**2,
-            (x-x3)**2 + (x-x3)**2 - (k*s3)**2
+            (x-x1)**2 + (y-y1)**2 - (k*s1)**2,
+            (x-x2)**2 + (y-y2)**2 - (k*s2)**2,
+            (x-x3)**2 + (y-y3)**2 - (k*s3)**2
             ]
     
     ans = solve(eq, [x, y])
