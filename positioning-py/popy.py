@@ -55,7 +55,8 @@ def drssi_dlnglat(p1, p2):
     dlnglat = math.sqrt(math.pow(dlng, 2) + math.pow(dlat, 2))
     # direct from dlnglat to drssi
     # 10m ~ 65 rssi linear,
-    dm = 6378000.0 * dlnglat /180 * math.pi
+    dm = 6378000.0 * dlnglat /180 * math.pi #the customer need 2m accuracy,
+    #which means 1e-5 in lnglat
     drssi = int(dm / 25.0 * 60)
     logger.info('dlnglat={0}, dm={1}, drssi={2}, p1={3}, p2={4}'.format(dlnglat, dm, drssi, str(p1), str(p2)))
 
